@@ -6,14 +6,21 @@ pub(crate)  struct Temperature {
 }
 
 
+///
+/// Температура CPU Raspberry Pi4.
+/// Parameters:
+///     path - путь к файлу с которогу можно прочитать температуру процессоора.
+///     Для Raspberry Pi /sys/class/thermal/thermal_zone0/temp.
 impl Temperature {
     pub fn new(path: String) -> Self {
         Temperature { path }
 
     }
 
+    ///
+    /// Читает температуру CPU Raspberry pi4 из файла.
     pub fn temperature(&self) -> Result<u32, String> {
-        let temperature = {
+        let temperature: Result<u32, String> = {
             match File::open(self.path.clone()) {
                 Ok(mut file) => {
                     let mut content = String::new();
