@@ -16,6 +16,7 @@ impl FanControl {
     }
 
     pub fn run(&mut self) -> Result<(), Vec<String>> {
+        /// TODO Обработать Ctrl + C
         let mut errors = vec![];
         match self.fan.start() {
             Ok(_) => { debug!("The fan started."); },
