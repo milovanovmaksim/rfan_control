@@ -21,7 +21,7 @@ fn main(){
     let fan_low = 0.2;
     let fan_high = 1.0;
     let pwm_freq = 1000.0;
-    let fan_pwm = Pwm::with_frequency(Channel::Pwm0, pwm_freq, fan_low, Polarity::Normal, false).unwrap();
+    let fan_pwm = Pwm::with_frequency(Channel::Pwm0, pwm_freq, 0.0, Polarity::Normal, false).unwrap();
     let temperature = Temperature::new(path.to_string());
     let fan = Fan::new(temperature, temp_min, temp_max, fan_low, fan_high, fan_pwm);
     let mut fan_control = FanControl::new(fan, delay);
