@@ -41,9 +41,9 @@ impl FanControl {
                     thread::sleep(Duration::from_secs(self.delay));
                 },
                 Err(update_duty_cycle_error) => {
+                    running.store(false, Ordering::SeqCst);
                     error!("FanControl::run | error: {}", update_duty_cycle_error);
                     errors.push(update_duty_cycle_error);
-                    break;
                 }
             }
         }
@@ -51,7 +51,10 @@ impl FanControl {
             Ok(_) => {
                 if errors.len() > 0 {
                     Err(errors)
-                } else { Ok(()) }
+                } else {
+                    debug!("FanControl::run | The fan is stoped.");
+                    Ok(())
+                }
             },
             Err(stop_error) => {
                 error!("FanControl::run | error: {}", stop_error);

@@ -66,7 +66,7 @@ impl Fan {
     pub fn stop(&self) -> PwmResult<()> {
         match self.fan_pwm.disable() {
             Ok(_) => {
-                debug!("Fan::stop | The fan is stoped.");
+                debug!("Fan::stop | The fan is stopping.");
                 Ok(())
             },
             Err(error) => {

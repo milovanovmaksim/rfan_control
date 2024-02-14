@@ -1,19 +1,22 @@
+use std::env;
 use log::error;
+
+use rppal::pwm::{Channel, Polarity, Pwm};
 
 mod temperature;
 mod fan;
 mod fan_control;
 use fan::fan::Fan;
 use fan_control::fan_control::FanControl;
-use rppal::pwm::{Channel, Polarity, Pwm};
 use crate::temperature::temperature::Temperature;
 
 
 
+
 fn main(){
-    // env::set_var("RUST_LOG", "debug");
-    // env::set_var("RUST_BACKTRACE", "full");
-    // env_logger::init();
+    env::set_var("RUST_LOG", "debug");
+    env::set_var("RUST_BACKTRACE", "full");
+    env_logger::init();
     let temp_min = 40;
     let temp_max = 60;
     let delay = 2;
