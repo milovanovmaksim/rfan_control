@@ -1,8 +1,10 @@
-use std::{env, thread, time::Duration};
+use log::error;
 
 mod temperature;
 mod fan;
+mod fan_control;
 use fan::fan::Fan;
+use fan_control::fan_control::FanControl;
 use rppal::pwm::{Channel, Polarity, Pwm};
 use crate::temperature::temperature::Temperature;
 
@@ -21,11 +23,14 @@ fn main(){
     let pwm_freq = 1000.0;
     let fan_pwm = Pwm::with_frequency(Channel::Pwm0, pwm_freq, fan_low, Polarity::Normal, false).unwrap();
     let temperature = Temperature::new(path.to_string());
-    let mut fan = Fan::new(temperature, temp_min, temp_max, fan_low, fan_high, fan_pwm);
-    fan.start().unwrap();
-    loop {
-
-        fan.update_duty_cycle();
-        thread::sleep(Duration::from_secs(delay));
+    let fan = Fan::new(temperature, temp_min, temp_max, fan_low, fan_high, fan_pwm);
+    let mut fan_control = FanControl::new(fan, delay);
+    match fan_control.run() {
+        Ok(_) => {  },
+        Err(errors) => {
+            for error in errors {
+                error!("main | error: {}", error)
+            }
+        }
     }
 }

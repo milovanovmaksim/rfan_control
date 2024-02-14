@@ -21,7 +21,10 @@ impl Fan {
     pub fn start(&mut self) -> Result<(), String> {
         self.fan_pwm.set_reset_on_drop(true);
         debug!("Fan::start | The fan is starting.");
-        self.fan_pwm.enable().map_err(|error| error.to_string())
+        self.fan_pwm.enable().map_err(|error| {
+            error!("Fan::duty_cycle | error: {}", error);
+            error.to_string()
+        })
     }
 
     fn duty_cycle(&self) -> Result<f64, String> {
@@ -48,7 +51,10 @@ impl Fan {
     pub fn update_duty_cycle(&mut self) -> Result<(), String> {
         match self.duty_cycle() {
             Ok(duty_cycle) => {
-                self.fan_pwm.set_duty_cycle(duty_cycle).map_err(|err| err.to_string())
+                self.fan_pwm.set_duty_cycle(duty_cycle).map_err(|error| {
+                    error!("Fan::update_duty_cycle | error: {}", error);
+                    error.to_string()
+                })
             }
             Err(error) => {
                 error!("Fan::duty_cycle | error: {}", error);
