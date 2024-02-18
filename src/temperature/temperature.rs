@@ -19,16 +19,16 @@ impl Temperature {
 
     ///
     /// Читает температуру CPU Raspberry pi4 из файла.
-    pub fn temperature(&self) -> Result<u32, String> {
-        let temperature: Result<u32, String> = {
+    pub fn temperature(&self) -> Result<u64, String> {
+        let temperature: Result<u64, String> = {
             match File::open(self.path.clone()) {
                 Ok(mut file) => {
                     let mut content = String::new();
                     match file.read_to_string(&mut content) {
                         Ok(_) => {
-                            match content.trim().parse::<f32>() {
+                            match content.trim().parse::<f64>() {
                                 Ok(temperature) => {
-                                    let temperature = (temperature / 1000.0) as u32;
+                                    let temperature = (temperature / 1000.0) as u64;
                                     Ok(temperature)
                                 },
                                 Err(e) => { Err(e.to_string()) }

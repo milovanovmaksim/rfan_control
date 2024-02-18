@@ -6,15 +6,15 @@ use crate::temperature::temperature::Temperature;
 
 pub(crate) struct Fan {
     temperature: Temperature,
-    temp_min: u32,
-    temp_max: u32,
+    temp_min: u64,
+    temp_max: u64,
     fan_low: f64,
     fan_high: f64,
     fan_pwm: Pwm
 }
 
 impl Fan {
-    pub fn new(temperature: Temperature, temp_min: u32, temp_max: u32, fan_low: f64, fan_high: f64, fan_pwm: Pwm) -> Self {
+    pub fn new(temperature: Temperature, temp_min: u64, temp_max: u64, fan_low: f64, fan_high: f64, fan_pwm: Pwm) -> Self {
         Fan { temperature, temp_min, temp_max, fan_low, fan_high, fan_pwm}
     }
 
