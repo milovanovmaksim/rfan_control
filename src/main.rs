@@ -19,7 +19,7 @@ fn main(){
     // env_logger::init();
     let temp_min = 40;
     let temp_max = 60;
-    let delay = 1;
+    let delay = 2;
     let path = "/sys/class/thermal/thermal_zone0/temp";
     let fan_low = 20;
     let fan_high = 100;

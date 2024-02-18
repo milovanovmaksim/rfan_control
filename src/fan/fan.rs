@@ -43,7 +43,7 @@ impl Fan {
                     let delta = self.fan_high - self.fan_low;
                     frequency = delta * (temperature - self.temp_min) / (self.temp_max - self.temp_min) + self.fan_low;
                 }
-                debug!("Fan::duty_cycle | frequency = {}, temperature = {}", (frequency as f64 / 100.0), temperature);
+                debug!("Fan::duty_cycle | frequency = {}, temperature = {}", (frequency), temperature);
                 Ok(frequency as f64 / 100.0)
             }
             Err(error) => {
