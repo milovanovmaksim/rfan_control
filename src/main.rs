@@ -14,12 +14,12 @@ use crate::temperature::temperature::Temperature;
 
 
 fn main(){
-    // env::set_var("RUST_LOG", "debug");
-    // env::set_var("RUST_BACKTRACE", "full");
-    // env_logger::init();
+    env::set_var("RUST_LOG", "debug");
+    env::set_var("RUST_BACKTRACE", "full");
+    env_logger::init();
     let temp_min = 40;
     let temp_max = 60;
-    let delay = 5;
+    let delay = 1;
     let path = "/sys/class/thermal/thermal_zone0/temp";
     let fan_low = 20;
     let fan_high = 100;
