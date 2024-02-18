@@ -21,8 +21,8 @@ fn main(){
     let temp_max = 60;
     let delay = 5;
     let path = "/sys/class/thermal/thermal_zone0/temp";
-    let fan_low = 0.2;
-    let fan_high = 1.0;
+    let fan_low = 20;
+    let fan_high = 100;
     let pwm_freq = 1000.0;
     let fan_pwm = Pwm::with_frequency(Channel::Pwm0, pwm_freq, 0.0, Polarity::Normal, false).unwrap();
     let temperature = Temperature::new(path.to_string());

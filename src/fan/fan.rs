@@ -8,13 +8,13 @@ pub(crate) struct Fan {
     temperature: Temperature,
     temp_min: u64,
     temp_max: u64,
-    fan_low: f64,
-    fan_high: f64,
+    fan_low: u64,
+    fan_high: u64,
     fan_pwm: Pwm
 }
 
 impl Fan {
-    pub fn new(temperature: Temperature, temp_min: u64, temp_max: u64, fan_low: f64, fan_high: f64, fan_pwm: Pwm) -> Self {
+    pub fn new(temperature: Temperature, temp_min: u64, temp_max: u64, fan_low: u64, fan_high: u64, fan_pwm: Pwm) -> Self {
         Fan { temperature, temp_min, temp_max, fan_low, fan_high, fan_pwm}
     }
 
@@ -36,15 +36,15 @@ impl Fan {
        let temperature = self.temperature.temperature();
         match temperature {
             Ok(temperature) => {
-                let mut frequency = 0.0;
+                let mut frequency = 0;
                 if temperature > self.temp_max {
-                    frequency = 1.0;
+                    frequency = 100;
                 } else if temperature > self.temp_min {
                     let delta = self.fan_high - self.fan_low;
-                    frequency = delta * (temperature - self.temp_min) as f64 / (self.temp_max - self.temp_min) as f64 + self.fan_low;
+                    frequency = delta * (temperature - self.temp_min) / (self.temp_max - self.temp_min) + self.fan_low;
                 }
                 debug!("Fan::duty_cycle | frequency = {}, temperature = {}", frequency, temperature);
-                Ok(frequency)
+                Ok((frequency / 100) as f64)
             }
             Err(error) => {
                 error!("Fan::duty_cycle | error: {}", error);
