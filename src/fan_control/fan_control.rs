@@ -21,7 +21,7 @@ impl FanControl {
     pub fn run(&mut self) -> Result<(), Vec<String>> {
         let mut errors = vec![];
         match self.fan.start() {
-            Ok(_) => { debug!("The fan started."); },
+            Ok(_) => {  },
             Err(start_error) => {
                 error!("FanControl::run | error: {}", start_error);
                 errors.push(start_error);
