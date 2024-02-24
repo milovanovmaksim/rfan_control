@@ -36,15 +36,15 @@ impl Fan {
        let temperature = self.temperature.temperature();
         match temperature {
             Ok(temperature) => {
-                let mut frequency = 0;
+                let mut duty_cycle = 0;
                 if temperature > self.temp_max {
-                    frequency = 100;
+                    duty_cycle = 100;
                 } else if temperature > self.temp_min {
                     let delta = self.fan_high - self.fan_low;
-                    frequency = delta * (temperature - self.temp_min) / (self.temp_max - self.temp_min) + self.fan_low;
+                    duty_cycle = delta * (temperature - self.temp_min) / (self.temp_max - self.temp_min) + self.fan_low;
                 }
-                debug!("Fan::duty_cycle | frequency = {}, temperature = {}", (frequency), temperature);
-                Ok(frequency as f64 / 100.0)
+                debug!("Fan::duty_cycle | duty_cycle = {}, temperature = {}", (duty_cycle), temperature);
+                Ok(duty_cycle as f64 / 100.0)
             }
             Err(error) => {
                 error!("Fan::duty_cycle | error: {}", error);
