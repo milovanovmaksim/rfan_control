@@ -26,9 +26,9 @@ impl Temperature {
                     let mut content = String::new();
                     match file.read_to_string(&mut content) {
                         Ok(_) => {
-                            match content.trim().parse::<f64>() {
+                            match content.trim().parse::<u64>() {
                                 Ok(temperature) => {
-                                    let temperature = (temperature / 1000.0) as u64;
+                                    let temperature = (temperature / 1000) as u64;
                                     Ok(temperature)
                                 },
                                 Err(e) => { Err(e.to_string()) }
